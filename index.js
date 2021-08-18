@@ -8,7 +8,8 @@ app.use(express.json());
 
 app.post('/tasks',(req,res)=>{
     //console.log(req.body)
-    data.push(req.body)
+    data.push(req.body);
+    res.json(req.body);
 })
 
 app.get('/tasks',(req,res)=>{
@@ -48,13 +49,16 @@ app.put('/tasks/:id',(req,res)=>{
 app.delete('/tasks/:id',(req,res)=>{
     const {id}=req.params;
     let task;
+    let taskIndex;
 
     data.forEach((item, index)=>{
-        if(item.id == id){
-         task = index;
+        if(item.id === parseInt(id)){
+         task = item;
+         taskIndex = index;
         }
     })
     data.splice(task, 1)
+    res.json()
 })
 
 
