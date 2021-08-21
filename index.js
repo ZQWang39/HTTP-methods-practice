@@ -1,84 +1,77 @@
-const data = [];
+
 
 const express = require('express');
+const cors = require('cors');
+
+const data = [];
+let id = 1;
+
 const app = express();
 app.use(express.json());
+app.use(cors());
 
+app.post('/tasks', (req, res) => {
+  const { description } = req.body;
+  if (!description) {
+    return res.status(400).json('description is missing');
+  }
+  id = id + 1;
+  const task = { description, done: false, id };
+  data.push(task);
+  return res.status(201).json(task);
+});
 
+app.get('/tasks', (req, res) => {
+  const { description } = req.query;
+  if (description) {
+    const filtered = data.filter((item) =>
+      item.description.includes(description)
+    );
+    return res.json(filtered);
+  }
+  return res.json(data);
+});
 
-app.post('/tasks',(req,res)=>{
-    console.log(req.body)
-    if(req.body.id === data.length+1 && req.body.description !==''&& req.body.done === false){
-        data.push(req.body);
-        res.status(201).json('The task successfully added')
-        //res.json(req.body);
-    }else{
-        res.json("The task you post is incorrect!!!");
-    }
-    
-})
+app.get('/tasks/:id', (req, res) => {
+  const { id } = req.params;
+  const task = data.find((item) => item.id === parseInt(id));
+  if (!task) {
+    return res.sendStatus(404);
+  }
+  return res.json(task);
+});
 
-app.get('/tasks',(req,res)=>{
-    //console.log(data)
-    res.status(200).json(data)
-})
+app.put('/tasks/:id', (req, res) => {
+  const { id } = req.params;
+  const { done, description } = req.body;
 
-app.get('/tasks/:id',(req,res)=>{
-   const {id}=req.params;
-   let index=-1;
-   for (let task of data){
-      if(task.id === parseInt(id)){
-          index = id-1;
-       }
-   }
-   if(index>=0){
-       let task = data[index];
-       res.status(200).json(task)
-   }else{
-       res.status(404).send('Task not found.')
-   }
-})
-app.put('/tasks/:id',(req,res)=>{
-    const {id}=req.params;
-    // let description = req.body.description;
-    let done = req.body.done;
+  const task = data.find((item) => item.id === parseInt(id));
+  if (!task) {
+    return res.sendStatus(404);
+  }
 
-    let index=-1;
-    for (let task of data){
-      if(task.id === parseInt(id)){
-          index = id-1;
-       }
-    }
-    if(index>=0){
-       let task = data[index];
-       task.done = done;
-       res.status(200).json(task);
-       
-    }else{
-       res.status(404).send('Task not found!!!')
-    }
-   
-})
+  if (done !== undefined) {
+    task.done = !!done;
+  }
+  if (description) {
+    task.description = description;
+  }
+  return res.json(task);
+});
 
-app.delete('/tasks/:id',(req,res)=>{
-    const {id}=req.params;
-    let index=-1;
-    for (let task of data){
-      if(task.id === parseInt(id)){
-          index = id-1;
-       }
-    }
-    if(index>=0){
-       data.splice(index, 1)
-       res.status(204).send('The task successfully deleted')
-       
-    }else{
-       res.status(404).send('Task not found!!!')
-    }
-    
-})
+app.delete('/tasks/:id', (req, res) => {
+  const { id } = req.params;
+  let taskIndex;
+  data.findIndex((item) => {
+    return item.id === parseInt(id);
+  });
+  if (taskIndex === -1) {
+    return res.sendStatus(404);
+  }
+  const [task] = data.splice(taskIndex, 1);
+  return res.json(task);
+});
 
-
-app.listen('3000',()=>{
-    console.log('Server is running on port 3000...')
-})
+app.listen('3000', () => {
+  console.log('Server is running on port 3000...');
+});

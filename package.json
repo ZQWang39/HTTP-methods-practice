@@ -4,13 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev":"nodemon index.js",
-    "start":"node index.js",
-    "debug":"node --inspect index.js"
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "debug": "node --inspect index.js"
   },
   "author": "Ziqi Wang",
   "license": "ISC",
   "devDependencies": {
     "express": "^4.17.1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5"
   }
 }
