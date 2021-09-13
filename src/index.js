@@ -4,6 +4,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const router = require("./routes/index");
+const logger = require("./utils/logger");
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
@@ -14,10 +15,12 @@ app.use(cors());
 app.use(
   process.env.NODE_ENV === "production" ? morgan("common") : morgan("dev")
 );
+// console.log(process.env.NODE_ENV);
 app.use(helmet());
 
 app.use("/api", router);
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}...`);
+  logger.debug("Debug info...");
+  logger.info(`Server is running on port ${PORT}...`);
 });

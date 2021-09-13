@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "nodemon ./src/index.js",
     "start": "node ./src/index.js",
-    "debug": "node --inspect index.js"
+    "debug": "node --inspect ./src/index.js"
   },
   "author": "Ziqi Wang",
   "license": "ISC",
@@ -17,6 +17,7 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "helmet": "^4.6.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "winston": "^3.3.3"
   }
 }
