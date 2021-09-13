@@ -24,4 +24,4 @@ Create swagger to test the code.
 
 1. npm install
 2. npm run start
-3. open up (localhost:8080/api-docs)
+3. click the [link](localhost:8080/api-docs) to launch your localhost.
