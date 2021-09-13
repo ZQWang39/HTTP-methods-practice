@@ -1,23 +1,27 @@
-Node Server Demo
+#Node Server Demo
 
-Overall:
+##Overall:
 
 Use express create a server to practice http methods (GET POST PUT and DELETE).
 Create swagger to test the code.
 
-Technology Used :
-Node.js,
+##Technology Used :
 
-Package installed:
-express.js,
-cors,
-dotenv,
-morgan,
-helmet,
-winston,
-swagger-jsdoc,
-swagger-ui-express
+- Node.js,
 
-Instrction:
-1.npm install
-2.npm run start 3. open up localhost:8080/api-docs
+##Package installed:
+
+- express.js,
+- cors,
+- dotenv,
+- morgan,
+- helmet,
+- winston,
+- swagger-jsdoc,
+- swagger-ui-express
+
+##Instrction:
+
+1. npm install
+2. npm run start
+3. open up (localhost:8080/api-docs)
