@@ -3,8 +3,10 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const helmet = require("helmet");
+const swaggerUi = require("swagger-ui-express");
 const router = require("./routes/index");
 const logger = require("./utils/logger");
+const swaggerDoc = require("./utils/swagger");
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
@@ -12,6 +14,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 app.use(
   process.env.NODE_ENV === "production" ? morgan("common") : morgan("dev")
 );
