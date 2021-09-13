@@ -11,7 +11,9 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use(morgan("common"));
+app.use(
+  process.env.NODE_ENV === "production" ? morgan("common") : morgan("dev")
+);
 app.use(helmet());
 
 app.use("/api", router);
